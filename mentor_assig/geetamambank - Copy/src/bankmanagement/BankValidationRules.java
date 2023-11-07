@@ -22,9 +22,9 @@ public interface BankValidationRules {
 	}
 	
 	//validate all
-	static BankAccount validateAll(String acctNo, String name, String accType, long bal, String accOpeningDate) throws InvalidInputException{
+	static BankAccount validateAll(String acctNo, String name, String accType, long bal, String accOpeningDate, String email, String pwsd) throws InvalidInputException{
 		validateAcctType(accType);
 		validateOpeningDate(accOpeningDate);
-		return new BankAccount(acctNo, name, accType, bal, accOpeningDate);
+		return new BankAccount(acctNo, name, accType, bal, accOpeningDate, email,pwsd );
 	}
 }
