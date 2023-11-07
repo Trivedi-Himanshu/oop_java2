@@ -23,7 +23,8 @@ public class TesterBank implements BankValidationRules{
 			while(!exit) {
 				
 				System.out.println("---------------------------------------");
-				System.out.println("1. Sign up\t2. Sign in\t3. Change password\t4. All Students details\t5. Sort(by email)\t6. Sorting(by acctOpenDate)\t7. Unsubsribe\t0.exit ");
+				System.out.println("1. Sign up\t2. Sign in\t3. Change password\t4. All Students details\t5. Sort(by email)\t6. Sorting(by acctOpenDate)"
+						+ "\t7. Unsubsribe\t0.exit\t8. Sort(by acctDatenName)\t9. Deposit\t10. Withdraw\t11. Transfer");
 				System.out.println("Enter your choice: ");
 				switch(sc.nextInt()) {
 				case 1:
@@ -81,6 +82,37 @@ public class TesterBank implements BankValidationRules{
 						System.out.println("Account successfully removed...!");
 					else 
 						throw new InvalidInputException("Email doesn't exists...!");
+					break;
+				case 8:
+					//sorting by acctDate and name
+					System.out.println("Sorting( by AcctDate and name).....");
+					Collections.sort(bankList, new Comparator<BankAccount>() {
+						@Override
+						public int compare(BankAccount b1, BankAccount b2) {
+							int ret = b1.getAccOpeningDate().compareTo(b2.getAccOpeningDate());
+							if(ret == 0) {
+								return b1.getName().compareTo(b2.getName());
+							}
+							return ret;
+						}
+					});
+					bankList.forEach(s->System.out.println(s));
+					break;
+					
+				case 9:
+					//deposit
+					System.out.print("Enter email and Amount: ");
+					deposit(sc.next() ,sc.nextLong(), bankList);
+					break;
+				case 10:
+					//withdraw
+					System.out.print("Enter email , pswd and Amount: ");
+					withdraw(sc.next() ,sc.next(), sc.nextLong(),bankList);
+					break;
+				case 11:
+					//transfer
+					System.out.print("Enter your email, password,amount and the email of receiver ");
+					transfer( sc.next(), sc.next(), sc.nextLong(), sc.next(), bankList);
 					break;
 				case 0:
 					//exit

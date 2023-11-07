@@ -44,9 +44,36 @@ public interface BankUtils {
 	}
 	
 	
-
+	//deposit amount
+	static void deposit(String email , long amount, ArrayList<BankAccount> list) throws InvalidInputException{
+		if(!(list.contains(new BankAccount(email)))) 
+			throw new InvalidInputException("Invalid Email...!");
+		
+		BankAccount b =list.get(list.indexOf(new BankAccount(email)));
+		b.setBalance(b.getBalance()+amount);
+		System.out.println(amount+ " deposited to "+email+" successfully...!");
+		System.out.println("Updated Balance: "+b.getBalance());
+	}
 	
 	
+	//withdraw amount withdraw(sc.next() ,sc.next(), sc.nextLong(),bankList);
+	static void withdraw(String email, String pswd, long amount, ArrayList<BankAccount> list) throws InvalidInputException {
+		signIn(email, pswd, list);
+			BankAccount b = list.get(list.indexOf(new BankAccount(email)));
+			
+			if (b.getBalance()<amount)
+				throw new InvalidInputException("Insufficient balance...!");
+			b.setBalance(b.getBalance()-amount);
+			System.out.println(amount+ " withdraq from "+email+" successfully...!");
+			System.out.println("Updated Balance: "+b.getBalance());
+	}
+	
+	
+	//transfer
+	static void transfer(String email, String pswd, long amount, String temail, ArrayList<BankAccount> list) throws InvalidInputException {
+		withdraw(email,pswd,amount,list);
+		deposit(temail, amount, list);
+	}
 }
 
 
